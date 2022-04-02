@@ -13,84 +13,13 @@
   <img src="github/screenshot/logo.jpg">
 </p>
 
-# Starter Laravel Project
+# Yuuran Admin
 
-Dibuatnya project ini karena saya membutuhkan starter project yang didalamnya sudah terdapat fungsi dan template.
-
-## Installasi
-
-Proses instalasinya +- sama seperti clone project laravel pada umumnya, yaitu :
-
-1. `git clone https://github.com/zgramming/laravel-starter-project.git`
-2. `cp .env.example .env` silahkan setup database sesuai keinginan
-3. `php artisan key:generate`
-4. `php artisan migrate:fresh --seed`
-5. `composer install`
-6. `php artisan serve`
-7. Buka browser dengan url `http://127.0.0.1:8000`
-
-
-## Fitur
-
-### 1. <a href="https://yajrabox.com/docs/laravel-datatables/master/installation" target="_blank">Laravel Yajra Datatable</a>
-Beberapa fitur yang sudah ada untuk datatable yaitu :
-
-- [x] Search + Debounce
-
-<img src="github/gif/datatable/1.gif">
-
-- [x] Filter by Combo box
-
-<img src="github/gif/datatable/2.gif">
-
-- [x] Sorting Asc / Desc
-- [x] Custom column (show image, show badge, show button action)
-
-### 2. CRUD Operation
-Pada project ini sudah disediakan contoh form dan fungsi-fungsi yang biasanya sering digunakan, diantaranya : 
-
-#### a. Form Create & Update
-
-<img src="github/gif/crud_operation/1.gif">
-
-Fitur yang ada dalam form ini yaitu : 
-* Validasi pada sisi client menggunakan <a href="https://jqueryvalidation.org/" target="_blank">Jquery Validation</a>
-* Validasi pada sisi server
-* Preview gambar sebelum upload file
-
-#### b. Delete data + image if exists
-Menghapus data pada database dan memeriksa apakah data terkait mempunyai file/image, jika ada image yang terkait hapus juga image/filenya
-
-<img src="github/gif/crud_operation/2.gif">
-
-#### c. Export Data (<a href="https://github.com/box/spout" target="_blank">Spout library</a>)
-Export data dengan menentukan tipe file yang diinginkan, untuk saat ini mensupport XLSX & CSV.
-
-<img src="github/gif/crud_operation/export.gif">
-
-#### d. Import Data (<a href="https://github.com/box/spout" target="_blank">Spout library</a>)
-Import data untuk saat ini baru mensupport XLSX, dengan menentukan tiap field yang ada di XLSX dan codingan kamu.
-
-<img src="github/gif/crud_operation/import.gif">
-
-#### e. Preview Document
-Menampilkan isi dokumen dalam modal.
-Untuk menampilkan isi dari PDF menggunakan plugin <a href="https://mozilla.github.io/pdf.js/" target="_blank">PDFJS</a>
-
-<img src="github/gif/crud_operation/preview-document.gif">
-
-#### f. Preview Image
-Menampilkan gambar di dalam modal, berguna ketika ingin melihat gambar dalam ukuran yang lebih besar.
-
-<img src="github/gif/crud_operation/preview-image.gif">
-
-### Credit
-Terimakasih kepada <a href="https://github.com/zuramai" target="_blank">zuramai</a>  yang telah membuat template <a href="https://github.com/zuramai/mazer" target="_blank">Mazer</a> yang dimana project ini menggunakan template tersebut didalamnya.
-
+Yuuran admin merupakan website untuk mengatur, mengelola dan membuat data untuk keperluan aplikasi <a target="_blank" href="https://github.com/zgramming/Yuuran"><b>Yuuran</b></a>, baik itu REST API maupun data transaksi didalamnya.
 
 # Issues
 
-Please file any issues, bugs or feature request as an issue on <a href="https://github.com/zgramming/laravel-starter-project/issues"><b> Github </b></a>
+Please file any issues, bugs or feature request as an issue on <a href="https://github.com/zgramming/Yuuran-Admin/issues"><b> Github </b></a>
 
 # Contributing
 
