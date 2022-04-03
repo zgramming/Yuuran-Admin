@@ -12,8 +12,8 @@ class Constant
     const PATH_IMAGE_EXAMPLE = "images/example";
 
     /// Digunakan untuk migration table
-    const STATUSENUM  = ['active','not_active','none'];
-    const STATUSKEYVALUE = ['active'=> "Aktif",'not_active'=>"Tidak Aktif",'none'=>"Tidak Diketahui"];
+    const STATUSENUM = ['active', 'not_active', 'none'];
+    const STATUSKEYVALUE = ['active' => "Aktif", 'not_active' => "Tidak Aktif", 'none' => "Tidak Diketahui"];
 
 
     /// Table Name Constant
@@ -27,5 +27,11 @@ class Constant
     const TABLE_MST_DATA = 'master_data';
     const TABLE_EXAMPLE = "example";
     const TABLE_PARAMETER = "parameter";
+
+    /// Custom
+    const TABLE_DUES_CATEGORY = "dues_category";
+    const TABLE_DUES = "dues";
+    const TABLE_DUES_DETAIL = "dues_detail";
+
 }
 

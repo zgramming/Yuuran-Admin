@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterCategorySeeder::class);
         $this->call(MasterDataSeeder::class);
         $this->call(ParameterSeeder::class);
+
         User::factory(1)->create();
+
+        $this->call(DuesCategorySeeder::class);
+        $this->call(DuesSeeder::class);
+        $this->call(DuesDetailSeeder::class);
     }
 }

@@ -23,7 +23,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('status', ['active', 'not_active', 'none']);
+            $table->enum('status', ['active', 'not_active', 'none'])->default("active");
+            $table->text("profile_image")->nullable();
             $table->timestamps();
             $table->foreign('app_group_user_id')->references('id')->on(Constant::TABLE_APP_GROUP_USER)->cascadeOnDelete();
         });

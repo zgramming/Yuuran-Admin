@@ -54,6 +54,8 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereUpdatedAt($value)
  * @method static Builder|User whereUsername($value)
  * @mixin Eloquent
+ * @property string|null $profile_image
+ * @method static Builder|User whereProfileImage($value)
  */
 class User extends Authenticatable
 {
