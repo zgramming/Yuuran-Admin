@@ -30,6 +30,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|DuesCategory whereStatus($value)
  * @method static Builder|DuesCategory whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @method static Builder|DuesCategory whereCreatedBy($value)
+ * @method static Builder|DuesCategory whereUpdatedBy($value)
  */
 class DuesCategory extends Model
 {

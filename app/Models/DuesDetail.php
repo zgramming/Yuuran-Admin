@@ -36,6 +36,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|DuesDetail whereUpdatedAt($value)
  * @method static Builder|DuesDetail whereUsersId($value)
  * @mixin Eloquent
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @method static Builder|DuesDetail whereCreatedBy($value)
+ * @method static Builder|DuesDetail whereUpdatedBy($value)
  */
 class DuesDetail extends Model
 {
