@@ -7,6 +7,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -47,6 +48,26 @@ class DuesDetail extends Model
 
     protected $table = Constant::TABLE_DUES_DETAIL;
 
+    protected $casts = [
+        'id' => "string",
+    ];
+
     protected $guarded = [];
+
+    /**
+     * @return BelongsTo
+     */
+    public function duesCategory(): BelongsTo
+    {
+        return $this->belongsTo(DuesCategory::class, "dues_category_id", "id");
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "users_id", "id");
+    }
 
 }

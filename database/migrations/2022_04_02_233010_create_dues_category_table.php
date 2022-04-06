@@ -18,6 +18,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string("code",50)->unique();
             $table->string("name",100);
+            $table->double("amount");
             $table->text("description")->nullable();
             $table->enum("status",['active','not_active','none'])->default('active');
             $table->unsignedInteger('created_by')->nullable();

@@ -7,6 +7,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -42,5 +43,13 @@ class DuesCategory extends Model
     protected $table = Constant::TABLE_DUES_CATEGORY;
 
     protected $guarded = [];
+
+    /**
+     * @return HasMany
+     */
+    public function duesDetail(): HasMany
+    {
+        return $this->hasMany(DuesDetail::class,"dues_category_id","id");
+    }
 
 }

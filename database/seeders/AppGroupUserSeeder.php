@@ -13,7 +13,19 @@ class AppGroupUserSeeder extends Seeder
             'code' => 'superadmin',
             'name' => 'Super Admin',
             'status' => 'active',
-        ]
+        ],
+        [
+            'id' => 2,
+            'code' => 'bendahara',
+            'name' => 'Bendahara',
+            'status' => 'active',
+        ],
+        [
+            'id' => 3,
+            'code' => 'warga',
+            'name' => 'Warga',
+            'status' => 'active',
+        ],
     ];
 
     /**

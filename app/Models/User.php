@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Database\Factories\UserFactory;
 use Eloquent;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -38,7 +39,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
  * @property-read UserGroup|null $userGroup
- * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static UserFactory factory(...$parameters)
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
@@ -87,12 +88,11 @@ class User extends Authenticatable
     protected $guarded = [];
 
     /**
-     * Always make password to bcrypt when insert into database
-     * @return Attribute
+     * @return HasMany
      */
-    protected function password(): Attribute
+    public function duesDetail(): HasMany
     {
-        return Attribute::make(set: fn($value)=> bcrypt($value));
+        return $this->hasMany(DuesDetail::class, "users_id", "id");
     }
 
     /**
@@ -100,6 +100,15 @@ class User extends Authenticatable
      */
     public function userGroup(): BelongsTo
     {
-        return $this->belongsTo(UserGroup::class,'app_group_user_id','id');
+        return $this->belongsTo(UserGroup::class, 'app_group_user_id', 'id');
+    }
+
+    /**
+     * Always make password to bcrypt when insert into database
+     * @return Attribute
+     */
+    protected function password(): Attribute
+    {
+        return Attribute::make(set: fn($value) => bcrypt($value));
     }
 }

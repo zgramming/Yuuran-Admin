@@ -16,10 +16,11 @@ return new class extends Migration
     {
         Schema::create(Constant::TABLE_DUES_DETAIL, function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedInteger("dues_id");
             $table->unsignedInteger("dues_category_id");
             $table->unsignedInteger("users_id");
-            $table->double("amount");
+            $table->integer("month")->default(0);
+            $table->integer("year")->default(0);
+            $table->double("amount")->default(0);
             $table->enum("status",['paid_off','not_paid_off','none'])->default('not_paid_off');
             $table->boolean("paid_by_someone_else")->default(false);
             $table->text("description")->nullable();
@@ -27,7 +28,6 @@ return new class extends Migration
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
 
-            $table->foreign("dues_id")->references("id")->on(Constant::TABLE_DUES)->cascadeOnDelete();
             $table->foreign("dues_category_id")->references("id")->on(Constant::TABLE_DUES_CATEGORY)->cascadeOnDelete();
             $table->foreign("users_id")->references("id")->on(Constant::TABLE_APP_USER)->cascadeOnDelete();
             $table->foreign("created_by")->references("id")->on(Constant::TABLE_APP_USER)->cascadeOnDelete();
