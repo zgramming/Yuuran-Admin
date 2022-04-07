@@ -61,7 +61,7 @@ class AuthenticationApiController extends Controller
             return response()->json([
                 "success" => false,
                 "message" => $message,
-            ], $code);
+            ], 500);
         } catch (Throwable $e) {
             $message = $e->getMessage();
             $code = $e->getCode() ?: 500;

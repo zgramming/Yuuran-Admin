@@ -13,34 +13,38 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\DuesDetail
  *
- * @property int $id
- * @property int $dues_id
+ * @property string $id
  * @property int $dues_category_id
  * @property int $users_id
+ * @property int $month
+ * @property int $year
  * @property float $amount
  * @property string $status
  * @property int $paid_by_someone_else
  * @property string|null $description
+ * @property int|null $created_by
+ * @property int|null $updated_by
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read DuesCategory $duesCategory
+ * @property-read User $user
  * @method static Builder|DuesDetail newModelQuery()
  * @method static Builder|DuesDetail newQuery()
  * @method static Builder|DuesDetail query()
  * @method static Builder|DuesDetail whereAmount($value)
  * @method static Builder|DuesDetail whereCreatedAt($value)
+ * @method static Builder|DuesDetail whereCreatedBy($value)
  * @method static Builder|DuesDetail whereDescription($value)
  * @method static Builder|DuesDetail whereDuesCategoryId($value)
- * @method static Builder|DuesDetail whereDuesId($value)
  * @method static Builder|DuesDetail whereId($value)
+ * @method static Builder|DuesDetail whereMonth($value)
  * @method static Builder|DuesDetail wherePaidBySomeoneElse($value)
  * @method static Builder|DuesDetail whereStatus($value)
  * @method static Builder|DuesDetail whereUpdatedAt($value)
- * @method static Builder|DuesDetail whereUsersId($value)
- * @mixin Eloquent
- * @property int|null $created_by
- * @property int|null $updated_by
- * @method static Builder|DuesDetail whereCreatedBy($value)
  * @method static Builder|DuesDetail whereUpdatedBy($value)
+ * @method static Builder|DuesDetail whereUsersId($value)
+ * @method static Builder|DuesDetail whereYear($value)
+ * @mixin Eloquent
  */
 class DuesDetail extends Model
 {

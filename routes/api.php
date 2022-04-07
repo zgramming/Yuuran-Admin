@@ -29,7 +29,7 @@ Route::get("/v1/dues/{dues_detail_id}",[DuesApiController::class,'get']);
 Route::post("/v1/dues/save/{dues_detail_id}", [DuesApiController::class, 'save']);
 
 Route::get("/v1/duesCategory", [DuesCategoryApiController::class, 'get']);
-Route::post("/v1/duesCategory/save/{user_id}", [DuesCategoryApiController::class, 'save']);
+Route::post("/v1/duesCategory/save/{dues_category_id}", [DuesCategoryApiController::class, 'save']);
 
 Route::get("/v1/citizen", [CitizenApiController::class, 'get']);
 Route::post("/v1/citizen/save/{user_id}",[CitizenApiController::class,'save']);

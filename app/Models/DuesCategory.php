@@ -35,6 +35,10 @@ use Illuminate\Support\Carbon;
  * @property int|null $updated_by
  * @method static Builder|DuesCategory whereCreatedBy($value)
  * @method static Builder|DuesCategory whereUpdatedBy($value)
+ * @property float $amount
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DuesDetail[] $duesDetail
+ * @property-read int|null $dues_detail_count
+ * @method static Builder|DuesCategory whereAmount($value)
  */
 class DuesCategory extends Model
 {

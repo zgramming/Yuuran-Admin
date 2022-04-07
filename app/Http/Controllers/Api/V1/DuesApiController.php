@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use PHPUnit\Util\Exception;
 use Throwable;
 
 class DuesApiController extends Controller
@@ -51,7 +52,7 @@ class DuesApiController extends Controller
             'success' => true,
             'data' => [
                 "total_citizen" => $totalCitizen,
-                "statistic" => $statistics,
+                "dues_category" => $statistics,
             ],
         ], 200);
     }
@@ -159,11 +160,55 @@ class DuesApiController extends Controller
         DB::beginTransaction();
         try {
             $duesDetail = DuesDetail::find($idDuesDetail);
+            $request = request()->all();
+
             $rules = [
-                ""
+                "dues_category_id" => ['required', 'integer'],
+                "users_id" => ['required', 'integer'],
+                "month" => ['required', 'integer'],
+                "year" => ['required', 'integer'],
+                "amount" => ['required', 'integer'],
+                "status" => ['required'],
             ];
+
+            request()->validate($rules);
+
+            /// Check if this action is [update]
+            if ($duesDetail != null) {
+                $citizenDues = DuesDetail::with(['user', 'duesCategory'])->where("users_id", $request['users_id'])
+                    ->where("month", $request['month'])
+                    ->where("year", $request['year'])
+                    ->where("dues_category_id", $request['dues_category_id'])
+                    ->first();
+                /// Jika Iuran sudah ada dengan [nama, bulan, tahun] yang difilter
+                /// Tampilkan pesan error "Iuran Zeffry Reynando untuk Bulan April 2022 sudah ada"
+
+                if ($citizenDues != null) {
+                    $name = $citizenDues->user->name;
+                    $category = $citizenDues->duesCategory->name;
+                    $monthName = date("F", mktime(0, 0, 0, $request['month'], 10));
+                    throw new Exception("$category $name untuk bulan $monthName $request[year] sudah ada.", 400);
+                }
+            }
+
+            $data = [
+                "dues_category_id" => $request['dues_category_id'],
+                "users_id" => $request['users_id'],
+                "month" => $request['month'],
+                "year" => $request['year'],
+                "amount" => $request['amount'],
+                "status" => $request['status'],
+                "paid_by_someone_else" => $request['paid_by_someone_else'],
+                "description" => $request['description'] ?? null,
+                "created_by" => $request['created_by'] ?? null,
+            ];
+
+            $result = DuesDetail::updateOrCreate(['id' => $idDuesDetail], $data);
+            if (!$result) throw new Exception("Terjadi kesalahan saat proses penyimpanan, lakukan beberapa saat lagi...", 400);
+
             DB::commit();
 
+            return response()->json(["success" => true, "data" => $result], 200);
         } catch (ValidationException $validationException) {
             /// Rollback Transaction
             DB::rollBack();
