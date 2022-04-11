@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Constant\Constant;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -36,7 +37,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|DuesCategory whereCreatedBy($value)
  * @method static Builder|DuesCategory whereUpdatedBy($value)
  * @property float $amount
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DuesDetail[] $duesDetail
+ * @property-read Collection|DuesDetail[] $duesDetail
  * @property-read int|null $dues_detail_count
  * @method static Builder|DuesCategory whereAmount($value)
  */

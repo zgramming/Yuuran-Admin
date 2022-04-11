@@ -25,7 +25,7 @@ class DuesApiController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => DuesDetail::with(['user', "duesCategory"])->find($idDuesDetail)
+            'data' => DuesDetail::with(['user', 'user.userGroup', "duesCategory"])->find($idDuesDetail)
         ]);
     }
 
@@ -39,13 +39,14 @@ class DuesApiController extends Controller
         $year = $request['year'] ?? date('Y');
 
         /// Get User where code usergroup == "warga"
-        $totalCitizen = User::with("userGroup")->whereRelation("userGroup", "code", "warga")->count("id");
+        $totalCitizen = User::with(["userGroup"])->whereRelation("userGroup", "code", "warga")->count("id");
         $statistics = DuesCategory::with([
             "duesDetail" => function (Builder $q) use ($month, $year) {
                 $q->where("month", "=", $month)
                     ->where("year", "=", $year);
             },
-            "duesDetail.user"
+            "duesDetail.user",
+            "duesDetail.duesCategory"
         ])->get();
 
         return response()->json([
@@ -105,8 +106,13 @@ class DuesApiController extends Controller
         if ($category != null) $dues = $dues->whereRelation("duesCategory", "id", "=", $category);
 
         $dues = $dues->get();
-
-        return response()->json(['success' => true, 'data' => $dues]);
+        $citizen = User::with(["userGroup"])->where("username", "=", $username)->first();
+        return response()->json(['success' => true,
+            'data' => [
+                "citizen" => $citizen,
+                "dues" => $dues,
+            ]
+        ]);
     }
 
     /**
@@ -161,6 +167,8 @@ class DuesApiController extends Controller
         try {
             /// Begin Transaction
             DB::beginTransaction();
+
+            $duesDetail = DuesDetail::find($idDuesDetail);
             $request = request()->all();
 
             $rules = [
@@ -179,18 +187,22 @@ class DuesApiController extends Controller
                 ->where("users_id", $request['users_id'])
                 ->where("month", $request['month'])
                 ->where("year", $request['year'])
-                ->where("dues_category_id", $request['dues_category_id'])
-                ->first();
+                ->where("dues_category_id", $request['dues_category_id']);
+
+            /// Jika mode update, abaikan iuran dengan ID [$duesDetail->id]
+            /// Ini untuk mengakomodir jika kita mengupdate iuran yang sama
+            /// Tetapi hanya ingin mengupdate beberapa item, misalnya [amount, description, dll)
+            if (!empty($duesDetail)) $citizenDues = $citizenDues->where("id", "!=", $duesDetail->id);
+            $citizenDues = $citizenDues->first();
+
             /// Jika Iuran sudah ada dengan [nama, bulan, tahun] yang difilter
             /// Tampilkan pesan error "Iuran Zeffry Reynando untuk Bulan April 2022 sudah ada"
-
             if ($citizenDues != null) {
                 $name = $citizenDues->user->name;
                 $category = $citizenDues->duesCategory->name;
                 $monthName = date("F", mktime(0, 0, 0, $request['month'], 10));
                 throw new Exception("$category $name untuk bulan $monthName $request[year] sudah ada.", 400);
             }
-
             $data = [
                 "dues_category_id" => $request['dues_category_id'],
                 "users_id" => $request['users_id'],
@@ -210,7 +222,7 @@ class DuesApiController extends Controller
 
             return response()->json([
                 "success" => true,
-                "message" => "Berhasil membuat Iuran",
+                "message" => empty($duesDetail) ? "Berhasil membuat Iuran" : "Berhasil mengupdate Iuran",
             ], 200);
         } catch (ValidationException $validationException) {
             /// Rollback Transaction
