@@ -13,11 +13,14 @@ use Throwable;
 class DuesCategoryApiController extends Controller
 {
     /**
+     * @param int|null $duesCategoryId
      * @return JsonResponse
      */
-    public function get(): JsonResponse
+    public function get(?int $duesCategoryId = null): JsonResponse
     {
-        $result = DuesCategory::all();
+        if ($duesCategoryId == null) $result = DuesCategory::all();
+        else $result = DuesCategory::find($duesCategoryId);
+
         return response()->json(['success' => true, 'data' => $result]);
     }
 
@@ -30,8 +33,9 @@ class DuesCategoryApiController extends Controller
         try {
             $duesCategory = DuesCategory::find($id);
             $request = request()->all();
+
             $rules = [
-                'code' => "required",
+                'code' => ["required", "unique:dues_category,code,$duesCategory?->id" ],
                 'name' => "required",
                 'amount' => ["required", 'integer']
             ];
@@ -46,13 +50,15 @@ class DuesCategoryApiController extends Controller
             ];
 
             $result = DuesCategory::updateOrCreate(['id' => $id], $data);
-
             if (!$result) throw new Exception("Terjadi kesalahan saat proses penyimpanan, lakukan beberapa saat lagi...", 400);
-            $message = !empty($id) ? "Mengupdate" : "Membuat";
+
+            $message = !empty($id) ? "Berhasil mengupdate kategori $duesCategory->name" : "Berhasil membuat kategori dengan nama $request[name]";
+
             return response()->json([
                 'success' => true,
-                'message' => "Berhasil $message $request[name]",
+                'message' => $message,
             ], 201);
+
         } catch (ValidationException $validationException) {
             return response()->json([
                 'success' => false,

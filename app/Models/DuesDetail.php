@@ -56,8 +56,21 @@ class DuesDetail extends Model
         'id' => "string",
     ];
 
+
     protected $guarded = [];
 
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Model $model) {
+            $model->setAttribute($model->getKeyName(), \Str::uuid());
+        });
+    }
     /**
      * @return BelongsTo
      */

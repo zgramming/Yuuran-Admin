@@ -152,14 +152,15 @@ class DuesApiController extends Controller
     }
 
     /**
+     * @param string $idDuesDetail
+     * @return JsonResponse
      * @throws Throwable
      */
-    public function save(string $idDuesDetail = "")
+    public function save(string $idDuesDetail = ""): JsonResponse
     {
-        /// Begin Transaction
-        DB::beginTransaction();
         try {
-            $duesDetail = DuesDetail::find($idDuesDetail);
+            /// Begin Transaction
+            DB::beginTransaction();
             $request = request()->all();
 
             $rules = [
@@ -173,22 +174,21 @@ class DuesApiController extends Controller
 
             request()->validate($rules);
 
-            /// Check if this action is [update]
-            if ($duesDetail != null) {
-                $citizenDues = DuesDetail::with(['user', 'duesCategory'])->where("users_id", $request['users_id'])
-                    ->where("month", $request['month'])
-                    ->where("year", $request['year'])
-                    ->where("dues_category_id", $request['dues_category_id'])
-                    ->first();
-                /// Jika Iuran sudah ada dengan [nama, bulan, tahun] yang difilter
-                /// Tampilkan pesan error "Iuran Zeffry Reynando untuk Bulan April 2022 sudah ada"
+            /// Check if dues is exists in database [users_id, month, year, dues_category_id]
+            $citizenDues = DuesDetail::with(['user', 'duesCategory'])
+                ->where("users_id", $request['users_id'])
+                ->where("month", $request['month'])
+                ->where("year", $request['year'])
+                ->where("dues_category_id", $request['dues_category_id'])
+                ->first();
+            /// Jika Iuran sudah ada dengan [nama, bulan, tahun] yang difilter
+            /// Tampilkan pesan error "Iuran Zeffry Reynando untuk Bulan April 2022 sudah ada"
 
-                if ($citizenDues != null) {
-                    $name = $citizenDues->user->name;
-                    $category = $citizenDues->duesCategory->name;
-                    $monthName = date("F", mktime(0, 0, 0, $request['month'], 10));
-                    throw new Exception("$category $name untuk bulan $monthName $request[year] sudah ada.", 400);
-                }
+            if ($citizenDues != null) {
+                $name = $citizenDues->user->name;
+                $category = $citizenDues->duesCategory->name;
+                $monthName = date("F", mktime(0, 0, 0, $request['month'], 10));
+                throw new Exception("$category $name untuk bulan $monthName $request[year] sudah ada.", 400);
             }
 
             $data = [
@@ -208,7 +208,10 @@ class DuesApiController extends Controller
 
             DB::commit();
 
-            return response()->json(["success" => true, "data" => $result], 200);
+            return response()->json([
+                "success" => true,
+                "message" => "Berhasil membuat Iuran",
+            ], 200);
         } catch (ValidationException $validationException) {
             /// Rollback Transaction
             DB::rollBack();
