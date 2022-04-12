@@ -16,7 +16,16 @@ class ModulSeeder extends Seeder
             'pattern' => 'setting/*',
             'icon_name' => null,
             'status' => 'active',
-        ]
+        ],
+        [
+            'id' => 2,
+            'code' => 'DUES',
+            'name' => "Iuran",
+            'order' => 1,
+            'pattern' => 'dues/*',
+            'icon_name' => null,
+            'status' => 'active',
+        ],
     ];
 
     /**

@@ -3,17 +3,17 @@
 namespace Database\Seeders;
 
 use App\Models\Menu;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class MenuSeeder extends Seeder
 {
 
     private array $datas = [
+        /// [Setting] Section
         [
             'id'=> 1,
             'app_modul_id'=> 1,
-            'code'=> 'STG00001',
+            'code'=> 'STG000001',
             'name'=> 'Management User',
             'route'=> 'setting/user',
             'order'=> 1,
@@ -23,7 +23,7 @@ class MenuSeeder extends Seeder
         [
             'id'=> 2,
             'app_modul_id'=> 1,
-            'code'=> 'STG00002',
+            'code'=> 'STG000002',
             'name'=> 'Management Group User',
             'route'=> 'setting/user-group',
             'order'=> 2,
@@ -33,7 +33,7 @@ class MenuSeeder extends Seeder
         [
             'id'=> 3,
             'app_modul_id'=> 1,
-            'code'=> 'STG00003',
+            'code'=> 'STG000003',
             'name'=> 'Menu',
             'route'=> 'setting/menu',
             'order'=> 3,
@@ -43,7 +43,7 @@ class MenuSeeder extends Seeder
         [
             'id'=> 4,
             'app_modul_id'=> 1,
-            'code'=> 'STG00004',
+            'code'=> 'STG000004',
             'name'=> 'Modul',
             'route'=> 'setting/modul',
             'order'=> 4,
@@ -53,7 +53,7 @@ class MenuSeeder extends Seeder
         [
             'id'=> 5,
             'app_modul_id'=> 1,
-            'code'=> 'STG00005',
+            'code'=> 'STG000005',
             'name'=> 'Access Menu',
             'route'=> 'setting/access-menu',
             'order'=> 5,
@@ -63,7 +63,7 @@ class MenuSeeder extends Seeder
         [
             'id'=> 6,
             'app_modul_id'=> 1,
-            'code'=> 'STG00006',
+            'code'=> 'STG000006',
             'name'=> 'Access Modul',
             'route'=> 'setting/access-modul',
             'order'=> 6,
@@ -73,7 +73,7 @@ class MenuSeeder extends Seeder
         [
             'id'=> 7,
             'app_modul_id'=> 1,
-            'code'=> 'STG00007',
+            'code'=> 'STG000007',
             'name'=> 'Master Data',
             'route'=> 'setting/master-category',
             'order'=> 7,
@@ -83,7 +83,7 @@ class MenuSeeder extends Seeder
         [
             'id'=> 8,
             'app_modul_id'=> 1,
-            'code'=> 'STG00008',
+            'code'=> 'STG000008',
             'name'=> 'Management Parameter',
             'route'=> 'setting/parameter',
             'order'=> 8,
@@ -93,7 +93,7 @@ class MenuSeeder extends Seeder
         [
             'id'=> 9,
             'app_modul_id'=> 1,
-            'code'=> 'STG00009',
+            'code'=> 'STG000009',
             'name'=> 'Example / Dokumentasi',
             'route'=> 'setting/example',
             'order'=> 9,
@@ -149,6 +149,38 @@ class MenuSeeder extends Seeder
             'name'=> 'Format Dokumen',
             'route'=> 'setting/format-dokumen',
             'order'=> 14,
+            'icon_name'=> null,
+            'status'=> 'active',
+        ],
+
+        /// [Dues] Section
+        [
+            'id'=> 15,
+            'app_modul_id'=> 2,
+            'code'=> 'DUES000001',
+            'name'=> 'Dashboard',
+            'route'=> 'dues/dashboard',
+            'order'=> 1,
+            'icon_name'=> null,
+            'status'=> 'active',
+        ],
+        [
+            'id'=> 16,
+            'app_modul_id'=> 2,
+            'code'=> 'DUES000002',
+            'name'=> 'Transaksi',
+            'route'=> 'dues/transaction',
+            'order'=> 2,
+            'icon_name'=> null,
+            'status'=> 'active',
+        ],
+        [
+            'id'=> 17,
+            'app_modul_id'=> 2,
+            'code'=> 'DUES000003',
+            'name'=> 'Kategori',
+            'route'=> 'dues/category',
+            'order'=> 3,
             'icon_name'=> null,
             'status'=> 'active',
         ],
