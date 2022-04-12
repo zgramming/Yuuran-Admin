@@ -203,6 +203,7 @@ class DuesApiController extends Controller
                 $monthName = date("F", mktime(0, 0, 0, $request['month'], 10));
                 throw new Exception("$category $name untuk bulan $monthName $request[year] sudah ada.", 400);
             }
+            
             $data = [
                 "dues_category_id" => $request['dues_category_id'],
                 "users_id" => $request['users_id'],

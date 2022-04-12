@@ -3,6 +3,8 @@
 use App\Http\Controllers\AccessMenuController;
 use App\Http\Controllers\AccessModulController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Dues\DuesCategoryController;
+use App\Http\Controllers\Dues\DuesDetailController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\MasterCategoryController;
 use App\Http\Controllers\MasterDataController;
@@ -146,3 +148,23 @@ Route::post('widget/import', [WidgetController::class, 'import'])->name('import'
 
 Route::get('widget/view-image', [WidgetController::class, 'view_image'])->name('view-image');
 Route::get('widget/view-document', [WidgetController::class, 'view_document'])->name('view-document');
+
+/**
+ * START Dues Transaction
+ */
+
+Route::get("dues/transaction", [DuesDetailController::class, "index"]);
+Route::get("dues/transaction/datatable", [DuesDetailController::class, "datatable"]);
+Route::get("dues/transaction/form_modal/{id}", [DuesDetailController::class, "form_modal"]);
+Route::post("dues/transaction/save/{id}", [DuesDetailController::class, "save"]);
+Route::delete("dues/transaction/delete/{id}", [DuesDetailController::class, "delete"]);
+
+/**
+ * START Dues Category
+ */
+
+Route::get("dues/category", [DuesCategoryController::class, "index"]);
+Route::get("dues/category/datatable", [DuesCategoryController::class, "datatable"]);
+Route::get("dues/category/form_modal/{id}", [DuesCategoryController::class, "form_modal"]);
+Route::post("dues/category/save/{id}", [DuesCategoryController::class, "save"]);
+Route::delete("dues/category/delete/{id}", [DuesCategoryController::class, "delete"]);
