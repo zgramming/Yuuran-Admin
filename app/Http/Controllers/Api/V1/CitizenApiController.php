@@ -15,11 +15,22 @@ use Throwable;
 class CitizenApiController extends Controller
 {
     /**
+     * @param int|null $userId
      * @return JsonResponse
      */
-    public function get(): JsonResponse
+    public function get(?int $userId = null): JsonResponse
     {
-        $citizen = User::with("userGroup")->whereRelation("userGroup", "code", "warga")->get();
+
+        if ($userId == null) {
+            $citizen = User::with("userGroup")
+                ->whereRelation("userGroup", "code", "warga")
+                ->get();
+        } else {
+            $citizen = User::with(['userGroup'])
+                ->whereRelation("userGroup", "code", "warga")
+                ->where("id", "=", $userId)
+                ->first();
+        }
 
         return response()->json(['success' => true, 'data' => $citizen]);
     }
@@ -35,29 +46,38 @@ class CitizenApiController extends Controller
             $request = request()->all();
 
             $rules = [
-                "username" => ["required"],
+                "username" => ["required", "unique:users,username,$citizen?->id"],
                 "name" => ['required'],
-                "email" => ['required'],
-                "password" => ['required', "confirmed"],
-                "password_confirmation" => ["required"],
+                "email" => ['required', "unique:users,email,$citizen?->id"],
             ];
+
+            /// Jika mode [create], tambahkan validasi password & password_confirmation
+            if (empty($citizen)) {
+                $rules['password'] = ['required', "confirmed"];
+                $rules['password_confirmation'] = ["required"];
+            }
 
             request()->validate($rules);
 
             $data = [
-                "app_group_user_id"=> UserGroup::where("code","=","warga")->value("id"),
+                "app_group_user_id" => UserGroup::where("code", "=", "warga")->value("id"),
                 "username" => $request['username'],
                 "name" => $request['name'],
                 "email" => $request['email'],
-                "password" => $request['password'],
             ];
+
+            /// Jika mode [create], tambahkan input password
+            if (empty($citizen)) {
+                $data['password'] = $request['password'];
+            }
 
             $result = User::updateOrCreate(['id' => $id], $data);
             if (!$result) throw new Exception("Terjadi kesalahan saat proses penyimpanan, lakukan beberapa saat lagi...", 400);
-            $message = !empty($id) ? "Mengupdate" : "Membuat";
+
+            $message = !empty($id) ? "Berhasil mengupdate warga dengan nama $citizen->name" : "Berhasil membuat warga dengan nama $request[name]";
             return response()->json([
                 'success' => true,
-                'message' => "Berhasil $message akun warga dengan nama $request[name]",
+                'message' => $message,
             ], 201);
 
         } catch (ValidationException $validationException) {

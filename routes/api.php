@@ -33,6 +33,7 @@ Route::get("/v1/duesCategory/{dues_category_id}", [DuesCategoryApiController::cl
 Route::post("/v1/duesCategory/save/{dues_category_id}", [DuesCategoryApiController::class, 'save']);
 
 Route::get("/v1/citizen", [CitizenApiController::class, 'get']);
+Route::get("/v1/citizen/{users_id}", [CitizenApiController::class, 'get']);
 Route::post("/v1/citizen/save/{user_id}",[CitizenApiController::class,'save']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
