@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthenticationApiController;
 use App\Http\Controllers\Api\V1\CitizenApiController;
 use App\Http\Controllers\Api\V1\DuesApiController;
-use App\Http\Controllers\DuesCategoryApiController;
+use App\Http\Controllers\Api\V1\DuesCategoryApiController;
 use Illuminate\Support\Facades\Route;
 
 /*

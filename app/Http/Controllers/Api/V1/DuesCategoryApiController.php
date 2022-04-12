@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Models\DuesCategory;
+use App\Http\Controllers\Controller;
+use App\Models\Dues\DuesCategory;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 use Throwable;
+use function request;
+use function response;
 
 class DuesCategoryApiController extends Controller
 {

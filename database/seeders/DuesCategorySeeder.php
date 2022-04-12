@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\DuesCategory;
+use App\Models\Dues\DuesCategory;
 use Illuminate\Database\Seeder;
 
 class DuesCategorySeeder extends Seeder

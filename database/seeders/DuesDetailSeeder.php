@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\DuesDetail;
+use App\Models\Dues\DuesDetail;
 use Illuminate\Database\Seeder;
 use Str;
 

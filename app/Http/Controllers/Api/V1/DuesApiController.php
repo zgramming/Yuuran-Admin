@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\DuesCategory;
-use App\Models\DuesDetail;
+use App\Models\Dues\DuesCategory;
+use App\Models\Dues\DuesDetail;
 use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Dues;
 
 use App\Constant\Constant;
 use Eloquent;
