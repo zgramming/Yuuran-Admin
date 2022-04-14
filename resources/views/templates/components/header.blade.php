@@ -5,7 +5,7 @@
     ->whereRelation("accessModul","app_group_user_id","=",auth()->user()->app_group_user_id)
     ->where("status","active")
     ->get();
-    
+
 @endphp
 
 <style>
