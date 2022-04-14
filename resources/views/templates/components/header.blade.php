@@ -1,7 +1,11 @@
 @php
     /// Get Modul where has menu
-        $moduls = \App\Models\Modul::with('menus')->whereStatus("active")->whereHas('menus')->get();
-
+    use App\Models\Modul;
+    $moduls = Modul::with(['accessModul','accessMenu','menus'])
+    ->whereRelation("accessModul","app_group_user_id","=",auth()->user()->app_group_user_id)
+    ->where("status","active")
+    ->get();
+    
 @endphp
 
 <style>
