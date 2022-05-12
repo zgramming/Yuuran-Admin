@@ -40,8 +40,6 @@
                                     <div class="d-flex flex-row justify-content-md-end justify-content-sm-start ">
                                         <div class="form-group">
                                             <div class="buttons">
-                                                <a href="#" class="btn btn-info" onclick="openExport('{{ url('setting/user/export') }}')"><span class="btn-label"><i class="fa fa-file-excel"></i></span> Export</a>
-                                                <a href="#" class="btn btn-dark" onclick="openImport()"><span class="btn-label"><i class="fa fa-file-upload"></i></span> Import</a>
                                                 <a href="#" class="btn btn-success" onclick="openBox('{{url('setting/user/form_modal/0')}}')"><span class="btn-label"><i class="fa fa-plus"></i></span> Tambah</a>
                                             </div>
                                         </div>

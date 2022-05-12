@@ -7,12 +7,12 @@
 @section('content')
     <div class="d-flex flex-sm-column flex-md-row flex-lg-row justify-content-between my-3">
         <div>
-            <h3>Kategori Iuran</h3>
+            <h3>Detail Iuran</h3>
         </div>
         <nav aria-label="breadcrumb" class="breadcrumb-header">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('dues/transaction') }}">Iuran</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Kategori Iuran</li>
+                <li class="breadcrumb-item active" aria-current="page">Transaksi Iuran</li>
             </ol>
         </nav>
     </div>
@@ -101,7 +101,6 @@
                                     <th style="min-width: 100px">Tahun</th>
                                     <th style="min-width: 200px">Jumlah</th>
                                     <th style="min-width: 200px">Status</th>
-                                    <th style="min-width: 200px">Diwakilkan</th>
                                     <th style="min-width: 200px">Created At</th>
                                     <th style="min-width: 200px">Updated At</th>
                                     <th style="min-width: 50px">Action</th>
@@ -145,7 +144,6 @@
                     {data: 'year', orderable: false},
                     {data: 'amount', orderable: false},
                     {data: 'status', orderable: false},
-                    {data: 'paid_by_someone_else', orderable: false},
                     {data: 'created_at', orderable: false},
                     {data: 'updated_at', orderable: false},
                     {data: 'action', orderable: false},

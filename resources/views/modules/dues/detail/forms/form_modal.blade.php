@@ -111,18 +111,6 @@
             </div>
         </div>
 
-        <div class="row mb-3 align-items-center">
-            <label for="paid_by_someone_else" class="col-sm-12 col-md-12 col-form-label">Status</label>
-            <div class="col-sm-12 col-md-10 ">
-                <div class="checkbox">
-                    <input type="checkbox" name="paid_by_someone_else" id="paid_by_someone_else"
-                           class='form-check-input'
-                           value="1" {{ $dues?->paid_by_someone_else == 1 ? "checked" : "" }}>
-                    <label for="paid_by_someone_else">Diwakilkan Orang Lain</label>
-                </div>
-            </div>
-        </div>
-
         @csrf
     </form>
 </div>

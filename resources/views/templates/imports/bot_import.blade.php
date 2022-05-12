@@ -124,7 +124,7 @@
                     parameter  = {},
 
                     /// [modal-sm, modal-md, modal-lg, modal-xl, modal-full]
-                    size = "",
+                    size = "modal-lg",
 
                     /// Make modal header dont have border bottom
                     borderlessModal = false,

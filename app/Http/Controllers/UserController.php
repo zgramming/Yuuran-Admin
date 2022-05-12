@@ -89,9 +89,10 @@ class UserController extends Controller
      */
     public function save(int $id = 0): JsonResponse
     {
-        /// Begin Transaction
-        DB::beginTransaction();
         try {
+            /// Begin Transaction
+            DB::beginTransaction();
+
             $user = User::find($id);
             $post = request()->all();
 
@@ -112,6 +113,8 @@ class UserController extends Controller
                 'email' => ['required', $uniqueEmail],
                 'password' => ['required'],
                 'status' => ['required'],
+                'jenis_kelamin'=> ['required'],
+                'no_telepon'=> ['required'],
             ];
 
             $validator = Validator::make($post, $rules);
@@ -127,6 +130,8 @@ class UserController extends Controller
                 'password' => $post['password'],
                 'email' => $post['email'],
                 'status' => $post['status'],
+                'jenis_kelamin'=> $post['jenis_kelamin'],
+                'no_telepon'=> $post['no_telepon'],
             ];
 
             $result = User::updateOrCreate(['id' => $id], $data);
@@ -139,11 +144,12 @@ class UserController extends Controller
             return response()->json(['success' => true, 'message' => $message], 200);
 
         } catch (QueryException $e) {
-            /// Rollback Transaction
-            DB::rollBack();
 
             $message = $e->getMessage();
             $code = $e->getCode() ?: 500;
+
+            /// Rollback Transaction
+            DB::rollBack();
 
             return response()->json(['success' => false, 'errors' => $message], $code);
         } catch (Throwable $e) {

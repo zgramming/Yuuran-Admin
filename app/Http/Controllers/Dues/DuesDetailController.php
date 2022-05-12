@@ -73,9 +73,6 @@ class DuesDetailController extends Controller
                 if ($item->status == "paid_off") return "<span class=\"badge bg-success\">Lunas</span>";
                 if ($item->status == "not_paid_off") return "<span class=\"badge bg-warning\">Belum Lunas</span>";
                 return "<span class=\"badge bg-secondary\">None</span>";
-            })->addColumn("paid_by_someone_else", function (DuesDetail $item) {
-                if ($item->paid_by_someone_else == 0) return "";
-                return "<span class=\"badge bg-success\">Iya</span>";
             })->addColumn('action', function (DuesDetail $item) {
                 $urlUpdate = url('dues/transaction/form_modal/' . $item->id);
                 $urlDelete = url('dues/transaction/delete/' . $item->id);
@@ -91,7 +88,7 @@ class DuesDetailController extends Controller
                     </form>
                 </div>
             ";
-            })->rawColumns(['amount', 'month', 'paid_by_someone_else', 'status', 'action']);
+            })->rawColumns(['amount', 'month', 'status', 'action']);
 
         return $datatable->make(true);
     }
@@ -171,7 +168,6 @@ class DuesDetailController extends Controller
                 "year" => $request['year'],
                 "amount" => fromCurrency($request['amount']),
                 "status" => $request['status'],
-                "paid_by_someone_else" => $request['paid_by_someone_else'] ?? 0,
                 "description" => $request['description'],
             ];
 

@@ -86,7 +86,10 @@ class AuthenticationApiController extends Controller
         ];
     }
 
-    public function users()
+    /**
+     * @return JsonResponse
+     */
+    public function users(): JsonResponse
     {
         return response()->json(['data' => User::all()]);
     }

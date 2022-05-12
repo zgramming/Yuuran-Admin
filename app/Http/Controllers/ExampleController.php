@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -252,19 +251,20 @@ class ExampleController extends Controller
         /// 27. uuid                        => "The field under validation must be a valid RFC 4122 (version 1, 3, 4, or 5) universally unique identifier (UUID)."
         ///
 
-        /// Begin Transaction
-        DB::beginTransaction();
         try {
+            /// Begin Transaction
+            DB::beginTransaction();
+
             $example = Example::find($id);
             $post = request()->all();
             /// Unique:NAMA_TABLE,NAMA_COLUMN
-            $uniqueCode = ($example == null) ? "unique:".Constant::TABLE_EXAMPLE.",code" :  Rule::unique(Constant::TABLE_EXAMPLE,'code')->using(function(\Illuminate\Database\Query\Builder $query) use($post,$example){
+            $uniqueCode = ($example == null) ? "unique:" . Constant::TABLE_EXAMPLE . ",code" : Rule::unique(Constant::TABLE_EXAMPLE, 'code')->using(function (\Illuminate\Database\Query\Builder $query) use ($post, $example) {
                 $query->where('code', '=', $post['input_code'])
-                    ->where('id','!=',$example->id);
+                    ->where('id', '!=', $example->id);
             });
 
             $rules = [
-                'input_code' => ['required',$uniqueCode],
+                'input_code' => ['required', $uniqueCode],
                 'input_name' => 'required',
                 'input_description' => 'required',
                 'input_birth_date' => 'required',
@@ -319,11 +319,12 @@ class ExampleController extends Controller
             return redirect('setting/example')->with('success', !empty($id) ? "Berhasil update" : "Berhasil membuat");
 
         } catch (QueryException $e) {
-            /// Rollback Transaction
-            DB::rollBack();
 
             $message = $e->getMessage();
             $code = $e->getCode() ?: 500;
+
+            /// Rollback Transaction
+            DB::rollBack();
 
             if (!empty($post['form_type'])) return response()->json(['success' => false, 'errors' => $message], $code);
             return back()->withErrors($message)->withInput();

@@ -187,12 +187,11 @@ function exportSpout(array $header, Collection $values, callable $callback, Expo
     /// For Debug Purpose
 //    $endTimer = microtime(true) - $startTimer;
 
-    $result = [
+    return [
         'relativePath' => Storage::disk('public')->path("$folder/$filename"),
         'url' => asset(Storage::url("$folder/$filename")),
         'size' => formatBytes(Storage::disk('public')->size("$folder/$filename")),
     ];
-    return $result;
 }
 
 /**
@@ -331,6 +330,6 @@ function generateYear(int $start, int $end): array
     for ($i = $start; $i <= $end; $i++) {
         $arr[$i] = $i;
     }
-    
+
     return $arr;
 }
