@@ -39,7 +39,10 @@ class DuesApiController extends Controller
 		$year = $request['year'] ?? date('Y');
 
 		/// Get User where code usergroup == "warga"
-		$totalCitizen = User::with(["userGroup"])->whereRelation("userGroup", "code", "warga")->count("id");
+		$totalCitizen = User::with(["userGroup"])
+            ->whereRelation("userGroup", "code", "warga")
+            ->count("id");
+
 		$statistics = DuesCategory::with([
 			"duesDetail" => function (Builder $q) use ($month, $year) {
 				$q->where("month", "=", $month)
