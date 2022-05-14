@@ -19,9 +19,9 @@ class DuesCategoryApiController extends Controller
      * @param int|null $duesCategoryId
      * @return JsonResponse
      */
-    public function get(?int $duesCategoryId = null): JsonResponse
+    public function get(int $duesCategoryId = null): JsonResponse
     {
-        if ($duesCategoryId == null) $result = DuesCategory::all();
+        if ($duesCategoryId === null) $result = DuesCategory::all();
         else $result = DuesCategory::find($duesCategoryId);
 
         return response()->json(['success' => true, 'data' => $result]);
