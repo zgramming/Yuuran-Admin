@@ -172,7 +172,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete("dues/category/delete/{id}", [DuesCategoryController::class, "delete"]);
 
     /**
-     * START Dues Category
+     * START Citizen
      */
 
     Route::get("citizen/transaction",[\App\Http\Controllers\Citizen\CitizenTransactionController::class,"index"]);
