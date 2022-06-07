@@ -31,7 +31,9 @@ class AuthController extends Controller
      */
     public function login(): Redirector|RedirectResponse|Application
     {
-
+        /// If you want change authentication method using username instead of email, you can follow link in below.
+        /// Don't forget to change input type from email to username in login.blade.php >.<
+        /// Reference [https://stackoverflow.com/a/31852437/7360353]
         try {
             $post = request()->all();
 
@@ -52,9 +54,11 @@ class AuthController extends Controller
 
             $user = User::with(['userGroup'])->where("username", "=", $post['username'])->first();
             $access = $this->checkAccessModulAndMenu($user?->userGroup?->id);
-            if (empty($access)) throw new Exception("Account dengan username $user->username belum mempunyai access, silahkan hubungi admin", 404);
+            if (empty($access)) {
+                throw new Exception("Account dengan username $user->username belum mempunyai access, silahkan hubungi admin", 404);
+            }
 
-            $initialRoute = $access->first()->menus->first()->route;
+            $initialRoute = $access->first()->accessMenu->first()->menu->route;
 
             request()->session()->regenerate();
             return redirect($initialRoute);
