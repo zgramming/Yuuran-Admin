@@ -1,14 +1,22 @@
 @php
     use App\Models\Menu;
+    use App\Models\User;
 
-    $menuByModul = Menu::with(['menuParent','menuChild'])
+    $userGroupId = User::with(['userGroup'])->whereId(auth()->id())->first()->userGroup->id;
+    $menuByModul = Menu::with(['menuParent','menuChild','accessMenu'])
     ->where('route','LIKE',request()->segment(1)."%")
-    ->whereNull('app_menu_id_parent')
-    ->orderBy('order',"asc")
+    ->whereNull('app_menu_id_parent');
+
+    if(auth()->user()->username != "superadmin"){
+        $menuByModul = $menuByModul->whereRelation("accessMenu","app_group_user_id","=",$userGroupId);
+    }
+
+    $menuByModul = $menuByModul->orderBy('order',"asc")
     ->get()
     ->toArray();
 
-$currentSegment = implode("/",request()->segments());
+    $currentSegment = implode("/",request()->segments());
+
 @endphp
 <div id="sidebar" class="active">
     <div class="sidebar-wrapper active">
@@ -28,7 +36,7 @@ $currentSegment = implode("/",request()->segments());
                     {{-- Jika menu bukan parent / hanya berdiri sendiri --}}
                     @if(empty($menu['menu_child']))
                         <li
-                            class="sidebar-item {{ $menu['route'] ===  $currentSegment ? "active" : "" }}">
+                            class="sidebar-item {{ Str::contains($currentSegment,$menu['route'])  ? "active" : "" }}">
                             <a href="{{ url($menu['route']) }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>{{ $menu['name'] }}</span>

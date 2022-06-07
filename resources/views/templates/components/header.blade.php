@@ -1,11 +1,17 @@
 @php
     /// Get Modul where has menu
-    use App\Models\Modul;
-    $moduls = Modul::with(['accessModul','accessMenu','menus'])
-    ->whereRelation("accessModul","app_group_user_id","=",auth()->user()->app_group_user_id)
-    ->where("status","active")
-    ->get()
-
+        use App\Models\Modul;
+        use App\Models\User;
+        $userGroupId = User::with(['userGroup'])->whereId(auth()->id())->first()->userGroup->id;
+        $moduls = Modul::with(['menus','accessModul'])
+            ->orderBy("order","desc");
+        if(auth()->user()->username != "superadmin"){
+            $moduls = $moduls->whereRelation("accessModul","app_group_user_id","=",$userGroupId);
+        }
+        $moduls = $moduls->whereStatus("active")
+            /// Check apakah access modul mempunyai access menu
+            ->whereHas('menus')
+            ->get()
 @endphp
 
 <style>
@@ -45,7 +51,8 @@
             </a>
             <div class="d-flex flex-wrap flex-row-reverse align-items-center w-100">
                 <span class="modul-item mx-2 my-2">
-                    <a href="#" class="btn-logout text-red" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">Logout</a>
+                    <a href="#" class="btn-logout text-red"
+                       onclick="event.preventDefault(); document.getElementById('form-logout').submit();">Logout</a>
                 </span>
                 <form action=" {{ route("logout") }}" id="form-logout" method="post" style="display: none;">
                     {{ csrf_field() }}
